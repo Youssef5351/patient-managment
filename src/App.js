@@ -10,6 +10,7 @@ import PrescriptionDesign from './components/PrescriptionDesign';
 import AddMedicineForm from './components/AddMedicineForm';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import MedicineAdminList from './components/AdminMedicineList';
 function App() {
   const [token, setToken] = useState(null);
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/prescription' element={<PrescriptionPreview/>}/>
           <Route path="/prescription-design" element={<PrescriptionDesign />} />
           <Route path="/add-medicine" element={<AddMedicineForm />}/>
+          <Route path="/medicines" element={<MedicineAdminList />}/>
           <Route
                         path="/dashboard"
                         element={token ? <Dashboard token={token} /> : <Login setToken={setToken} />}
