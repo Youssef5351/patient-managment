@@ -63,7 +63,7 @@ function PatientForm() {
       };
       console.log("Sending payload:", payload);
       
-      const response = await axios.put("http://localhost:5000/api/shifts/complete", payload);
+      const response = await axios.put("https://patient-managment-backend.vercel.app/api/shifts/complete", payload);
       console.log("Shift completed:", response.data);
       
       // Directly set shift to null instead of setting shiftCompleted to true
