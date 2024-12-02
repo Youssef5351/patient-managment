@@ -305,7 +305,7 @@ const TreatmentForm = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/medicines');
+        const response = await axios.get(https://patient-managment-backend.vercel.app/api/medicines');
         const options = response.data.map((medicine) => ({
           value: medicine.id,
           label: medicine.name
@@ -332,7 +332,7 @@ const TreatmentForm = () => {
     setSuccessMessage('');
 
     try {
-      await axios.post('http://localhost:5000/api/treatment/add', treatment);
+      await axios.post('https://patient-managment-backend.vercel.app/api/treatment/add', treatment);
       setSuccessMessage('تم حفظ خطة العلاج بنجاح!');
       setShowPrescription(true);
     } catch (error) {
@@ -352,7 +352,7 @@ const TreatmentForm = () => {
   
       try {
         const response = await axios.delete(
-          `http://localhost:5000/api/patients/${encodeURIComponent(patient._id)}`
+          `https://patient-managment-backend.vercel.app/api/patients/${encodeURIComponent(patient._id)}`
         );
   
         // Redirect to the doctor page after successful deletion
