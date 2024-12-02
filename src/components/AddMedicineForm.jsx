@@ -81,14 +81,14 @@ function AddMedicineForm({ onMedicineAdded }) {
 
                 <button
                     type="submit"
-                    className="w-[60%] p-2 bg-[#2a9f67] hover:bg-[#3fd98f] text-white font-bold rounded transition duration-200 font-cairo"
+                    className="w-[60%] py-3 rounded-lg text-white font-medium transition-transform duration-200 transform hover:scale-[1.02] bg-violet-600 hover:bg-violet-700 active:scale-[0.98] shadow-lg shadow-violet-500/20"
                 >
                     ! اضف الدواء
                 </button>
             </form>
 
             {/* Bottom-right corner lines */}
-            <div className="absolute bottom-5 right-5 text-[#E3E3E3] bg-[#2a9f67] py-[1.25rem] px-[7.5rem] rounded-3xl text-lg font-semibold space-y-1 text-right font-cairo">
+            <div className="absolute bottom-0 right-5 text-[#E3E3E3] bg-[#7839E5] py-[1.25rem] px-[7.5rem] rounded-3xl text-lg font-semibold text-right font-cairo">
                 <p>اقراص: tab</p>
                 <p>شراب: syr</p>
                 <p>كبسولات: cap</p>
