@@ -10,7 +10,7 @@ import PrescriptionDesign from './components/PrescriptionDesign';
 import AddMedicineForm from './components/AddMedicineForm';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import MedicineAdminList from './components/AdminMedicineList';
+import MedicineAdminList from './components/MedicineAdminList';
 function App() {
   const [token, setToken] = useState(null);
   return (
