@@ -16,7 +16,7 @@ function MedicineManager() {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await axios.get('http://localhost:5000/api/medicines', {
+            const response = await axios.get('https://patient-managment-backend.vercel.app/api/medicines', {
                 // Add caching prevention
                 headers: {
                     'Cache-Control': 'no-cache',
