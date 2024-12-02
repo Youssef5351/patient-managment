@@ -20,7 +20,7 @@ function AddMedicineForm({ onMedicineAdded }) {
         setErrorMessage('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/medicines/add', medicine);
+            const response = await axios.post('https://patient-managment-backend.vercel.app/api/medicines/add', medicine);
 
             if (response.data) {
                 setSuccessMessage(response.data.message || 'Medicine added successfully');
