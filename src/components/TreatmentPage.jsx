@@ -302,21 +302,24 @@ const TreatmentForm = () => {
     })
   };
 
-  useEffect(() => {
-    const fetchMedicines = async () => {
-      try {
-        const response = await axios.get('https://patient-managment-backend.vercel.app/api/medicines');
-        const options = response.data.map((medicine) => ({
-          value: medicine.id,
-          label: medicine.name
-        }));
-        setMedicinesList(options);
-      } catch (error) {
-        setErrorMessage('فشل في جلب الأدوية');
-      }
-    };
-    fetchMedicines();
-  }, []);
+useEffect(() => {
+  const fetchMedicines = async () => {
+    try {
+      console.log('Fetching medicines from:', 'https://patient-managment-backend.vercel.app/api/medicines');
+      const response = await axios.get('https://patient-managment-backend.vercel.app/api/medicines');
+      console.log('Response data:', response.data);
+      const options = response.data.map((medicine) => ({
+        value: medicine.id,
+        label: medicine.name
+      }));
+      setMedicinesList(options);
+    } catch (error) {
+      console.error('Full error details:', error);
+      setErrorMessage(`فشل في جلب الأدوية: ${error.message}`);
+    }
+  };
+  fetchMedicines();
+}, []);
 
   const handleSelectChange = (selectedOption, { name }) => {
     setTreatment((prevTreatment) => ({
