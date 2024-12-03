@@ -309,7 +309,7 @@ useEffect(() => {
       const response = await axios.get('https://patient-managment-backend.vercel.app/api/medicines');
       console.log('Response data:', response.data);
       const options = response.data.map((medicine) => ({
-        value: medicine.id,
+        value: medicine._id,
         label: medicine.name
       }));
       setMedicinesList(options);
