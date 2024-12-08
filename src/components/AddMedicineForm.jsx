@@ -96,6 +96,7 @@ function AddMedicineForm({ onMedicineAdded }) {
                 <p>محلول: solution</p>
                 <p>بخاخ: spray</p>
                 <p>غسول: lotion</p>
+                <p>امبول: amp</p>
                 <p>فوار: eff</p>
                 <p>مرهم: oint</p>
                 <p>قطرة: drop</p>
