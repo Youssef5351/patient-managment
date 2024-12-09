@@ -5,6 +5,20 @@ function AddMedicineForm({ onMedicineAdded }) {
     const [medicine, setMedicine] = useState({ name: '' });
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+       const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
+
+    useEffect(() => {
+        // Check if the popup has been shown in this session
+        const popupShown = sessionStorage.getItem('popupShown');
+        if (!popupShown) {
+            setShowPopup(true);
+            sessionStorage.setItem('popupShown', 'true'); // Mark popup as shown
+        }
+    }, []);
+
+    const handleClosePopup = () => {
+        setShowPopup(false); // Close the popup
+    };
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -50,6 +64,22 @@ function AddMedicineForm({ onMedicineAdded }) {
 
     return (
         <div className="h-screen mx-auto p-6 bg-gray-900 shadow-lg rounded-lg text-gray-300 relative">
+                        {showPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-[#111827] p-6 rounded-lg shadow-lg w-[80%] sm:w-[40%] text-center">
+                        <h2 className="text-lg font-semibold mb-4 font-cairo text-[#D1D5DB]">تنبيه هام</h2>
+                        <p className="mb-4 text-[#C7F15F] font-cairo text-lg">
+                        tap و ليس tab يرجي كتابة اختصار الدواء
+                        </p>
+                        <button
+                            onClick={handleClosePopup}
+                            className="px-4 py-2 bg-[#8CAA45] font-tajawal text-white rounded hover:bg-[#8CAA12]"
+                        >
+                            اغلاق
+                        </button>
+                    </div>
+                </div>
+            )}
                         
             <h2 className="text-3xl font-bold text-[#E3E3E3] mb-4 font-cairo">! اضف دواء جديد</h2>
 
