@@ -134,8 +134,6 @@ function AddMedicineForm({ onMedicineAdded }) {
                 <p>لبوس: supp</p>
                 <p>جل: gel</p>
                 <p>مضاد حيوي: antibiotic</p>
-                <p>مضاد حيوي شراب: antibiotic syr</p>
-                <p>مضاد حيوي حقن: antibiotic inj</p>
             </div>
         </div>
     );
