@@ -48,6 +48,13 @@ function PatientForm() {
       const response = await api.post("/api/patients", { ...patient, shift }); // Include shift info
       setSuccessMessage("تم إضافة المريض بنجاح!");
       setShowPrescription(true);
+      setPatient({
+        name: "",
+        age: "",
+        symptoms: "",
+        visitDate: new Date().toISOString().split("T")[0],
+        status: "waiting",
+    });
     } catch (error) {
       setError(error.response?.data?.message || "فشل في إضافة المريض");
     } finally {
