@@ -5,11 +5,7 @@ function AddMedicineForm({ onMedicineAdded }) {
     const [medicine, setMedicine] = useState({ name: '' });
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    const handleClosePopup = () => {
-        setShowPopup(false); // Close the popup
-    };
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setMedicine((prevState) => ({
