@@ -49,6 +49,7 @@ function AddMedicineForm({ onMedicineAdded }) {
     };
 
     return (
+         <div className="h-screen mx-auto p-6 bg-gray-900 shadow-lg rounded-lg text-gray-300 relative">
             <h2 className="text-3xl font-bold text-[#E3E3E3] mb-4 font-cairo">! اضف دواء جديد</h2>
 
             {successMessage && (
