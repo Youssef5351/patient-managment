@@ -429,11 +429,6 @@ useEffect(() => {
       <div className="min-h-screen p-6 bg-gray-900 text-gray-100 font-cairo">
         <div className="max-w-4xl mx-auto">
           <div className="relative w-full" style={{ height: '842px' }}>
-            <img 
-              src={elkoumi} 
-              alt="Prescription Background" 
-              className="w-[40rem] h-full object-contain"
-            />
             
             <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-8">
               {/* Patient Info */}
