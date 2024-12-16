@@ -10,7 +10,7 @@ function DoctorPage() {
 
     useEffect(() => {
         fetchPatients();
-        const interval = setInterval(fetchPatients, 30000);
+        const interval = setInterval(fetchPatients, 5000);
         return () => clearInterval(interval);
     }, []);
 
