@@ -343,7 +343,25 @@ useEffect(() => {
     }
   };
 
-  const handlePrint = async () => {
+ const handlePrint = async () => {
+    try {
+      // Track medicine usage data when printing
+      const medicineUsageData = {
+        medicine1: treatment.medicine1,
+        medicine2: treatment.medicine2,
+        medicine3: treatment.medicine3,
+        medicine4: treatment.medicine4,
+        medicine5: treatment.medicine5
+      };
+  
+      // Post the medicine usage data only when printing
+      const response = await axios.post('https://patient-managment-backend.vercel.app/api/medicine-usage/track', medicineUsageData);
+      console.log('Medicine usage tracking response for print:', response.data);
+  
+    } catch (error) {
+      console.error('Error tracking medicine usage:', error);
+    }
+  
     // Trigger print dialog
     window.print();
   
@@ -388,7 +406,7 @@ useEffect(() => {
     setSuccessMessage('');
   };
 
-  const renderMedicineSection = (number) => (
+ const renderMedicineSection = (number) => (
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-gray-200 mb-1 font-cairo">
@@ -426,29 +444,71 @@ useEffect(() => {
 
   if (showPrescription) {
     return (
-      <div className="min-h-screen p-6 bg-gray-900 text-gray-100 font-cairo">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative w-full" style={{ height: '842px' }}>
-            
+      <div className="min-h-[40rem] bg-gray-900 text-gray-100 font-cairo">
+        <div className="max-w-7xl mx-auto">
+          <div
+            className="relative w-full"
+            style={{
+              height: '100vh', // Adjust to fill the page height
+              pageBreakInside: 'avoid', // Prevents splitting the prescription over pages
+            }}
+          >
+            <img
+              src={elkoumi}
+              alt="Prescription Background"
+              className="w-full h-full " // Ensure the background fills without gaps
+            />
+  
             <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-8">
               {/* Patient Info */}
               <div className="text-center mt-16">
                 <p className="text-gray-800 mb-2 ml-[5.5rem] text-lg absolute mt-32">
                   {new Date(treatment.treatmentDate).toLocaleDateString('ar-EG')}
                 </p>
-                <p className="text-gray-800 mt-20 ml-[18rem] text-lg absolute">{treatment.patientName}</p>
-                <p className="text-gray-800 ml-32 mt-[5.25rem] text-lg absolute">{treatment.patientAge}</p>
-                <p className="text-gray-800 text-lg mt-[7.75rem] ml-[5.5rem] pl-[13rem] absolute">{treatment.symptoms}</p>
+                <p className="text-gray-800 mt-20 ml-[18rem] text-lg absolute">
+                  {treatment.patientName}
+                </p>
+                <p className="text-gray-800 ml-32 mt-[5.25rem] text-lg absolute">
+                  {treatment.patientAge}
+                </p>
+                <p className="text-gray-800 text-lg mt-[7.75rem] ml-[5.5rem] pl-[13rem] absolute">
+                  {treatment.symptoms}
+                </p>
               </div>
-
+  
               {/* Medicines */}
               <div className="flex-grow mt-60 ml-12 space-y-3">
   {[1, 2, 3, 4, 5].map((num) => {
     if (treatment[`medicine${num}`] && treatment[`dosage${num}`]) {
+      // Determine the color based on the index
+      let medicineColor;
+      switch (num) {
+        case 1:
+          medicineColor = 'text-red-500'; // Red for first medicine
+          break;
+        case 2:
+          medicineColor = 'text-green-500'; // Green for second medicine
+          break;
+        case 3:
+          medicineColor = 'text-blue-500'; // Blue for third medicine
+          break;
+        case 4:
+          medicineColor = 'text-black'; // Black for fourth medicine
+          break;
+        case 5:
+          medicineColor = 'text-red-500'; // Red for fifth medicine
+          break;
+        default:
+          medicineColor = 'text-gray-800'; // Default color
+          break;
+      }
+
       return (
         <div key={num} className="text-gray-800 text-2xl space-y-1 text-left font-roboto">
-          <span className="block">
-            {medicinesList.find(m => m.value === treatment[`medicine${num}`])?.label}
+          <span className={`block ${medicineColor}`}>
+            {medicinesList.find(
+              (m) => m.value === treatment[`medicine${num}`]
+            )?.label}
           </span>
           <span className="block text-lg text-black ml-20 font-tajawal">
             {treatment[`dosage${num}`]}
@@ -459,10 +519,8 @@ useEffect(() => {
     return null;
   })}
 </div>
-
-            </div>
-          </div>
-
+</div>
+</div>
           {/* Action Buttons */}
           <div className="mt-6 flex justify-center space-x-4 print:hidden">
             <button
