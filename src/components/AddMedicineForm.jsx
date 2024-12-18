@@ -12,16 +12,16 @@ function AddMedicineForm({ onMedicineAdded }) {
         inj: true,
         solution: true,
         spray: true,
-        lotion: false,
-        eff: false,
-        oint: false,
+        lotion: true,
+        eff: true,
+        oint: true,
         drop: true,
         supp: true,
-        gel: false,
+        gel: true,
         antibiotic: true,
-        RingerSolution: false,
-        SlineSolution: false,
-        GlucoseSolution:false,
+        RingerSolution: true,
+        SlineSolution: true,
+        GlucoseSolution:true,
     });
     const handleChange = (e) => {
         const { name, value } = e.target;
