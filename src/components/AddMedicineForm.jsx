@@ -110,58 +110,6 @@ function AddMedicineForm({ onMedicineAdded }) {
                     ! اضف الدواء
                 </button>
             </form>
-
-            {/* Bottom-right corner lines */}
-         <div className="absolute bottom-0 right-5 text-[#E3E3E3] bg-[#7839E5] py-[1.25rem] px-[7.5rem] rounded-3xl text-lg font-semibold text-right font-cairo">
-                <p className={getTextStyle(medicines.tab)}>
-                    {medicines.tab ? "منتهي" : "غير منتهي"}: Tab
-                </p>
-                <p className={getTextStyle(medicines.syr)}>
-                    {medicines.syr ? "منتهي" : "غير منتهي"}: Syr
-                </p>
-                <p className={getTextStyle(medicines.cap)}>
-                    {medicines.cap ? "منتهي" : "غير منتهي"}: Cap
-                </p>
-                <p className={getTextStyle(medicines.inj)}>
-                    {medicines.inj ? "منتهي" : "غير منتهي"}: Inj
-                </p>
-                <p className={getTextStyle(medicines.solution)}>
-                    {medicines.solution ? "منتهي" : "غير منتهي"}: Solution
-                </p>
-                <p className={getTextStyle(medicines.spray)}>
-                    {medicines.spray ? "منتهي" : "غير منتهي"}: Spray
-                </p>
-                <p className={getTextStyle(medicines.lotion)}>
-                    {medicines.lotion ? "منتهي" : "غير منتهي"}: Lotion
-                </p>
-                <p className={getTextStyle(medicines.eff)}>
-                    {medicines.eff ? "منتهي" : "غير منتهي"}: Eff
-                </p>
-                <p className={getTextStyle(medicines.oint)}>
-                    {medicines.oint ? "منتهي" : "غير منتهي"}: Oint
-                </p>
-                <p className={getTextStyle(medicines.drop)}>
-                    {medicines.drop ? "منتهي" : "غير منتهي"}: Drops
-                </p>
-                <p className={getTextStyle(medicines.supp)}>
-                    {medicines.supp ? "منتهي" : "غير منتهي"}: Supp
-                </p>
-                <p className={getTextStyle(medicines.gel)}>
-                    {medicines.gel ? "منتهي" : "غير منتهي"}: Gel
-                </p>
-                <p className={getTextStyle(medicines.antibiotic)}>
-                    {medicines.antibiotic ? "منتهي" : "غير منتهي"}: Antibiotic
-                </p>
-                <p className={getTextStyle(medicines.RingerSolution)}>
-                    {medicines.RingerSolution ? "منتهي" : "غير منتهي"}: Ringer Solution
-                </p>
-                <p className={getTextStyle(medicines.SlineSolution)}>
-                    {medicines.SlineSolution ? "منتهي" : "غير منتهي"}: Sline Solution
-                </p>
-                <p className={getTextStyle(medicines.GlucoseSolution)}>
-                    {medicines.GlucoseSolution ? "منتهي" : "غير منتهي"}: Glucose Solution
-                </p>
-            </div>
         </div>
     );
 }
