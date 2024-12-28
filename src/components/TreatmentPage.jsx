@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
-import elkoumi from "../assets/Elkoumi.jpg";
+import elkoumi from "../assets/Elkoumi2.jpg";
 
 const TreatmentForm = () => {
   const location = useLocation();
@@ -462,22 +462,22 @@ useEffect(() => {
             <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-8">
               {/* Patient Info */}
               <div className="text-center mt-16">
-                <p className="text-gray-800 mb-2 ml-[5.5rem] text-lg absolute mt-32">
+                <p className="text-gray-800 mb-2 ml-[1.5rem] text-sm absolute mt-[3rem]">
                   {new Date(treatment.treatmentDate).toLocaleDateString('ar-EG')}
                 </p>
-                <p className="text-gray-800 mt-20 ml-[18rem] text-lg absolute">
+                <p className="text-gray-800 mt-4 ml-[11rem] text-[.85rem] absolute">
                   {treatment.patientName}
                 </p>
-                <p className="text-gray-800 ml-32 mt-[5.25rem] text-lg absolute">
+                <p className="text-gray-800 ml-[4.25rem] mt-[1.1rem] text-sm absolute">
                   {treatment.patientAge}
                 </p>
-                <p className="text-gray-800 text-lg mt-[7.75rem] ml-[5.5rem] pl-[13rem] absolute">
+                <p className="text-gray-800 text-sm mt-[3rem] pl-[11rem] absolute">
                   {treatment.symptoms}
                 </p>
               </div>
   
               {/* Medicines */}
-              <div className="flex-grow mt-60 ml-12 space-y-3">
+              <div className="flex-grow mt-32 ml-6 space-y-3">
   {[1, 2, 3, 4, 5].map((num) => {
     if (treatment[`medicine${num}`] && treatment[`dosage${num}`]) {
       // Determine the color based on the index
@@ -504,13 +504,13 @@ useEffect(() => {
       }
 
       return (
-        <div key={num} className="text-gray-800 text-2xl space-y-1 text-left font-roboto">
+        <div key={num} className="text-gray-800 text-base space-y-1 text-left font-roboto">
           <span className={`block ${medicineColor}`}>
             {medicinesList.find(
               (m) => m.value === treatment[`medicine${num}`]
             )?.label}
           </span>
-          <span className="block text-lg text-black ml-20 font-tajawal">
+          <span className="block text-sm text-black ml-20 font-tajawal">
             {treatment[`dosage${num}`]}
           </span>
         </div>
