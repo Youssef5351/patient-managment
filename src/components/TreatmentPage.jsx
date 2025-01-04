@@ -8,7 +8,7 @@ const TreatmentForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const patient = location.state?.patient;
-
+  const [patients, setPatients] = useState([]);
   const [medicinesList, setMedicinesList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -46,218 +46,216 @@ const TreatmentForm = () => {
 
   const dosageList = [
     // Tablets (قرص)
-      { value: 'قرص بعد الفطار', label: 'قرص بعد الفطار' },
-      { value: 'قرص بعد الغذاء', label: 'قرص بعد الغذاء' },
-      { value: 'قرص بعد العشاء', label: 'قرص بعد العشاء' },
-      { value: 'قرص قبل النوم', label: 'قرص قبل النوم' },
-      { value: 'قرص في الصباح', label: 'قرص في الصباح' },
-      { value: 'قرص في المساء', label: 'قرص في المساء' },
-      { value: 'قرص كل 12 ساعة', label: 'قرص كل 12 ساعة' },
-      { value: 'قرص كل 24 ساعة', label: 'قرص كل 24 ساعة' },
-      { value: 'قرص كل يوم', label: 'قرص كل يوم' },
-      { value: 'قرص يوم بعد يوم', label: 'قرص يوم بعد يوم' },
-      { value: 'قرص 3 مرات يومياً', label: 'قرص 3 مرات يومياً' },
-      { value: 'قرص 4 مرات يومياً', label: 'قرص 4 مرات يومياً' },
-      { value: 'قرص عند الحاجة', label: 'قرص عند الحاجة' },
-      { value: 'قرص عند اللزوم', label: 'قرص عند اللزوم' },
-      { value: 'قرص قبل الفطار والعشاء', label: 'قرص قبل الفطار والعشاء' },
-      { value: 'قرص بعد الفطار والعشاء', label: 'قرص بعد الفطار والعشاء' },
-      { value: 'قرص قبل النوم حسب الحاجة', label: 'قرص قبل النوم حسب الحاجة' },
-      { value: 'قرص في وقت الألم', label: 'قرص في وقت الألم' },
-      { value: 'قرص صباحاً ومساءً', label: 'قرص صباحاً ومساءً' },
-      { value: 'قرص كل يومين', label: 'قرص كل يومين' },
-      { value: 'قرص للأطفال يومياً', label: 'قرص للأطفال يومياً' },
-      { value: 'قرص للأطفال مرتين يومياً', label: 'قرص للأطفال مرتين يومياً' },
-      { value: 'قرص للكبار يومياً', label: 'قرص للكبار يومياً' },
-      { value: 'قرص للكبار مرتين يومياً', label: 'قرص للكبار مرتين يومياً' },
-      { value: 'قرص كل 3 أيام', label: 'قرص كل 3 أيام' },
-      { value: 'قرص كل أسبوع', label: 'قرص كل أسبوع' },
-      { value: 'قرص عند الضرورة', label: 'قرص عند الضرورة' },
+    { value: 'قرص بعد الفطار', label: 'Tablet after breakfast' },
+    { value: 'قرص بعد الغذاء', label: 'Tablet after lunch' },
+    { value: 'قرص بعد العشاء', label: 'Tablet after dinner' },
+    { value: 'قرص قبل النوم', label: 'Tablet before sleep' },
+    { value: 'قرص في الصباح', label: 'Tablet in the morning' },
+    { value: 'قرص في المساء', label: 'Tablet in the evening' },
+    { value: 'قرص كل 12 ساعة', label: 'Tablet every 12 hours' },
+    { value: 'قرص كل 24 ساعة', label: 'Tablet every 24 hours' },
+    { value: 'قرص كل يوم', label: 'Tablet daily' },
+    { value: 'قرص يوم بعد يوم', label: 'Tablet every other day' },
+    { value: 'قرص 3 مرات يومياً', label: 'Tablet three times a day' },
+    { value: 'قرص 4 مرات يومياً', label: 'Tablet four times a day' },
+    { value: 'قرص عند الحاجة', label: 'Tablet as needed' },
+    { value: 'قرص عند اللزوم', label: 'Tablet when required' },
+    { value: 'قرص قبل الفطار والعشاء', label: 'Tablet before breakfast and dinner' },
+    { value: 'قرص بعد الفطار والعشاء', label: 'Tablet after breakfast and dinner' },
+    { value: 'قرص قبل النوم حسب الحاجة', label: 'Tablet before sleep as needed' },
+    { value: 'قرص في وقت الألم', label: 'Tablet during pain' },
+    { value: 'قرص صباحاً ومساءً', label: 'Tablet morning and evening' },
+    { value: 'قرص كل يومين', label: 'Tablet every two days' },
+    { value: 'قرص للأطفال يومياً', label: 'Tablet daily for children' },
+    { value: 'قرص للأطفال مرتين يومياً', label: 'Tablet twice daily for children' },
+    { value: 'قرص للكبار يومياً', label: 'Tablet daily for adults' },
+    { value: 'قرص للكبار مرتين يومياً', label: 'Tablet twice daily for adults' },
+    { value: 'قرص كل 3 أيام', label: 'Tablet every three days' },
+    { value: 'قرص كل أسبوع', label: 'Tablet weekly' },
+    { value: 'قرص عند الضرورة', label: 'Tablet in case of necessity' },
 
-    // Syrup (شراب)
-    { value: 'ملعقة بعد الفطار', label: 'ملعقة بعد الفطار' },
-    { value: 'ملعقة بعد الغذاء', label: 'ملعقة بعد الغذاء' },
-    { value: 'ملعقة بعد العشاء', label: 'ملعقة بعد العشاء' },
-    { value: 'ملعقة قبل النوم', label: 'ملعقة قبل النوم' },
-    { value: 'ملعقة في الصباح', label: 'ملعقة في الصباح' },
-    { value: 'ملعقة في المساء', label: 'ملعقة في المساء' },
-    { value: 'ملعقة كل 12 ساعة', label: 'ملعقة كل 12 ساعة' },
-    { value: 'ملعقة كل 24 ساعة', label: 'ملعقة كل 24 ساعة' },
-    { value: 'ملعقة كل يوم', label: 'ملعقة كل يوم' },
-    { value: 'ملعقة يوم بعد يوم', label: 'ملعقة يوم بعد يوم' },
-    { value: 'ملعقة 3 مرات يومياً', label: 'ملعقة 3 مرات يومياً' },
-    { value: 'ملعقة 4 مرات يومياً', label: 'ملعقة 4 مرات يومياً' },
-    { value: 'ملعقة عند الحاجة', label: 'ملعقة عند الحاجة' },
-    { value: 'ملعقة عند اللزوم', label: 'ملعقة عند اللزوم' },
-    { value: 'ملعقة قبل الفطار والعشاء', label: 'ملعقة قبل الفطار والعشاء' },
-    { value: 'ملعقة بعد الفطار والعشاء', label: 'ملعقة بعد الفطار والعشاء' },
-    { value: 'ملعقة قبل النوم حسب الحاجة', label: 'ملعقة قبل النوم حسب الحاجة' },
-    { value: 'ملعقة في وقت الألم', label: 'ملعقة في وقت الألم' },
-    { value: 'ملعقة صباحاً ومساءً', label: 'ملعقة صباحاً ومساءً' },
-    { value: 'ملعقة كل يومين', label: 'ملعقة كل يومين' },
-    { value: 'ملعقة للأطفال يومياً', label: 'ملعقة للأطفال يومياً' },
-    { value: 'ملعقة للأطفال مرتين يومياً', label: 'ملعقة للأطفال مرتين يومياً' },
-    { value: 'ملعقة للكبار يومياً', label: 'ملعقة للكبار يومياً' },
-    { value: 'ملعقة للكبار مرتين يومياً', label: 'ملعقة للكبار مرتين يومياً' },
-    { value: 'ملعقة كل 3 أيام', label: 'ملعقة كل 3 أيام' },
-    { value: 'ملعقة كل أسبوع', label: 'ملعقة كل أسبوع' },
-    { value: 'ملعقة عند الضرورة', label: 'ملعقة عند الضرورة' },
+      // Syrup (شراب)
+    { value: 'ملعقة بعد الفطار', label: 'Spoon after breakfast' },
+    { value: 'ملعقة بعد الغذاء', label: 'Spoon after lunch' },
+    { value: 'ملعقة بعد العشاء', label: 'Spoon after dinner' },
+    { value: 'ملعقة قبل النوم', label: 'Spoon before sleep' },
+    { value: 'ملعقة في الصباح', label: 'Spoon in the morning' },
+    { value: 'ملعقة في المساء', label: 'Spoon in the evening' },
+    { value: 'ملعقة كل 12 ساعة', label: 'Spoon every 12 hours' },
+    { value: 'ملعقة كل 24 ساعة', label: 'Spoon every 24 hours' },
+    { value: 'ملعقة كل يوم', label: 'Spoon every day' },
+    { value: 'ملعقة يوم بعد يوم', label: 'Spoon every other day' },
+    { value: 'ملعقة 3 مرات يومياً', label: 'Spoon 3 times daily' },
+    { value: 'ملعقة 4 مرات يومياً', label: 'Spoon 4 times daily' },
+    { value: 'ملعقة عند الحاجة', label: 'Spoon when needed' },
+    { value: 'ملعقة عند اللزوم', label: 'Spoon as required' },
+    { value: 'ملعقة قبل الفطار والعشاء', label: 'Spoon before breakfast and dinner' },
+    { value: 'ملعقة بعد الفطار والعشاء', label: 'Spoon after breakfast and dinner' },
+    { value: 'ملعقة قبل النوم حسب الحاجة', label: 'Spoon before sleep if needed' },
+    { value: 'ملعقة في وقت الألم', label: 'Spoon during pain' },
+    { value: 'ملعقة صباحاً ومساءً', label: 'Spoon morning and evening' },
+    { value: 'ملعقة كل يومين', label: 'Spoon every 2 days' },
+    { value: 'ملعقة للأطفال يومياً', label: 'Spoon daily for children' },
+    { value: 'ملعقة للأطفال مرتين يومياً', label: 'Spoon twice daily for children' },
+    { value: 'ملعقة للكبار يومياً', label: 'Spoon daily for adults' },
+    { value: 'ملعقة للكبار مرتين يومياً', label: 'Spoon twice daily for adults' },
+    { value: 'ملعقة كل 3 أيام', label: 'Spoon every 3 days' },
+    { value: 'ملعقة كل أسبوع', label: 'Spoon every week' },
+    { value: 'ملعقة عند الضرورة', label: 'Spoon when necessary' },
 
     // Effervescent (فوار)
-    { value: 'كيس بعد الفطار', label: 'كيس بعد الفطار' },
-    { value: 'كيس بعد الغذاء', label: 'كيس بعد الغذاء' },
-    { value: 'كيس بعد العشاء', label: 'كيس بعد العشاء' },
-    { value: 'كيس قبل النوم', label: 'كيس قبل النوم' },
-    { value: 'كيس في الصباح', label: 'كيس في الصباح' },
-    { value: 'كيس في المساء', label: 'كيس في المساء' },
-    { value: 'كيس كل 12 ساعة', label: 'كيس كل 12 ساعة' },
-    { value: 'كيس كل 24 ساعة', label: 'كيس كل 24 ساعة' },
-    { value: 'كيس كل يوم', label: 'كيس كل يوم' },
-    { value: 'كيس يوم بعد يوم', label: 'كيس يوم بعد يوم' },
-    { value: 'كيس 3 مرات يومياً', label: 'كيس 3 مرات يومياً' },
-    { value: 'كيس 4 مرات يومياً', label: 'كيس 4 مرات يومياً' },
-    { value: 'كيس عند الحاجة', label: 'كيس عند الحاجة' },
-    { value: 'كيس عند اللزوم', label: 'كيس عند اللزوم' },
-    { value: 'كيس قبل الفطار والعشاء', label: 'كيس قبل الفطار والعشاء' },
-    { value: 'كيس بعد الفطار والعشاء', label: 'كيس بعد الفطار والعشاء' },
-    { value: 'كيس قبل النوم حسب الحاجة', label: 'كيس قبل النوم حسب الحاجة' },
-    { value: 'كيس في وقت الألم', label: 'كيس في وقت الألم' },
-    { value: 'كيس صباحاً ومساءً', label: 'كيس صباحاً ومساءً' },
-    { value: 'كيس كل يومين', label: 'كيس كل يومين' },
-    { value: 'كيس للأطفال يومياً', label: 'كيس للأطفال يومياً' },
-    { value: 'كيس للأطفال مرتين يومياً', label: 'كيس للأطفال مرتين يومياً' },
-    { value: 'كيس للكبار يومياً', label: 'كيس للكبار يومياً' },
-    { value: 'كيس للكبار مرتين يومياً', label: 'كيس للكبار مرتين يومياً' },
-    { value: 'كيس كل 3 أيام', label: 'كيس كل 3 أيام' },
-    { value: 'كيس كل أسبوع', label: 'كيس كل أسبوع' },
-    { value: 'كيس عند الضرورة', label: 'كيس عند الضرورة' },
-    { value: 'كيس علي نصف كوب ماء مرتين يومياً', label: 'كيس علي نصف كوب ماء مرتين يومياً' },
-    { value: 'كيس علي نصف كوب ماء ثلاث مرات يومياً', label: 'كيس علي نصف كوب ماء ثلاث مرات يومياً' },
-    { value: 'كيس علي نصف كوب ماء مرة يومياً', label: 'كيس علي نصف كوب ماء مرة يومياً' },
+    { value: 'كيس بعد الفطار', label: 'Sachet after breakfast' },
+    { value: 'كيس بعد الغذاء', label: 'Sachet after lunch' },
+    { value: 'كيس بعد العشاء', label: 'Sachet after dinner' },
+    { value: 'كيس قبل النوم', label: 'Sachet before sleep' },
+    { value: 'كيس في الصباح', label: 'Sachet in the morning' },
+    { value: 'كيس في المساء', label: 'Sachet in the evening' },
+    { value: 'كيس كل 12 ساعة', label: 'Sachet every 12 hours' },
+    { value: 'كيس كل 24 ساعة', label: 'Sachet every 24 hours' },
+    { value: 'كيس كل يوم', label: 'Sachet every day' },
+    { value: 'كيس يوم بعد يوم', label: 'Sachet every other day' },
+    { value: 'كيس 3 مرات يومياً', label: 'Sachet 3 times daily' },
+    { value: 'كيس 4 مرات يومياً', label: 'Sachet 4 times daily' },
+    { value: 'كيس عند الحاجة', label: 'Sachet when needed' },
+    { value: 'كيس عند اللزوم', label: 'Sachet as required' },
+    { value: 'كيس قبل الفطار والعشاء', label: 'Sachet before breakfast and dinner' },
+    { value: 'كيس بعد الفطار والعشاء', label: 'Sachet after breakfast and dinner' },
+    { value: 'كيس قبل النوم حسب الحاجة', label: 'Sachet before sleep if needed' },
+    { value: 'كيس في وقت الألم', label: 'Sachet during pain' },
+    { value: 'كيس صباحاً ومساءً', label: 'Sachet morning and evening' },
+    { value: 'كيس كل يومين', label: 'Sachet every 2 days' },
+    { value: 'كيس للأطفال يومياً', label: 'Sachet daily for children' },
+    { value: 'كيس للأطفال مرتين يومياً', label: 'Sachet twice daily for children' },
+    { value: 'كيس للكبار يومياً', label: 'Sachet daily for adults' },
+    { value: 'كيس للكبار مرتين يومياً', label: 'Sachet twice daily for adults' },
+    { value: 'كيس كل 3 أيام', label: 'Sachet every 3 days' },
+    { value: 'كيس كل أسبوع', label: 'Sachet every week' },
+    { value: 'كيس عند الضرورة', label: 'Sachet when necessary' },
+    { value: 'كيس علي نصف كوب ماء مرتين يومياً', label: 'Sachet on half a cup of water twice daily' },
+    { value: 'كيس علي نصف كوب ماء ثلاث مرات يومياً', label: 'Sachet on half a cup of water three times daily' },
+    { value: 'كيس علي نصف كوب ماء مرة يومياً', label: 'Sachet on half a cup of water once daily' },
 
     // Injections (حقن)
-    { value: 'حقنة بعد الفطار', label: 'حقنة بعد الفطار' },
-    { value: 'حقنة بعد الغذاء', label: 'حقنة بعد الغذاء' },
-    { value: 'حقنة بعد العشاء', label: 'حقنة بعد العشاء' },
-    { value: 'حقنة قبل النوم', label: 'حقنة قبل النوم' },
-    { value: 'حقنة في الصباح', label: 'حقنة في الصباح' },
-    { value: 'حقنة في المساء', label: 'حقنة في المساء' },
-    { value: 'حقنة كل يوم', label: 'حقنة كل يوم' },
-    { value: 'حقنة يوم بعد يوم', label: 'حقنة يوم بعد يوم' },
-    { value: 'حقنة 3 مرات في الأسبوع', label: 'حقنة 3 مرات في الأسبوع' },
-    { value: 'حقنة كل أسبوع', label: 'حقنة كل أسبوع' },
-    { value: 'حقنة 3 مرات يومياً', label: 'حقنة 3 مرات يومياً' },
-    { value: 'حقنة 4 مرات يومياً', label: 'حقنة 4 مرات يومياً' },
-    { value: 'حقنة عند الحاجة', label: 'حقنة عند الحاجة' },
-    { value: 'حقنة عند اللزوم', label: 'حقنة عند اللزوم' },
-    { value: 'حقنة في وقت الألم', label: 'حقنة في وقت الألم' },
-    { value: 'حقنة في الليل حسب الحاجة', label: 'حقنة في الليل حسب الحاجة' },
-    { value: 'حقنة في الصباح والمساء', label: 'حقنة في الصباح والمساء' },
-    { value: 'حقنة للأطفال يومياً', label: 'حقنة للأطفال يومياً' },
-    { value: 'حقنة للأطفال مرتين يومياً', label: 'حقنة للأطفال مرتين يومياً' },
-    { value: 'حقنة للكبار يومياً', label: 'حقنة للكبار يومياً' },
-    { value: 'حقنة كل شهر', label: 'حقنة كل شهر' },
-    { value: 'حقنة حسب الحاجة كل أسبوع', label: 'حقنة حسب الحاجة كل أسبوع' },
-    { value: 'حقنة كل 3 أيام', label: 'حقنة كل 3 أيام' },
+    { value: 'حقنة بعد الفطار', label: 'Injection after breakfast' },
+    { value: 'حقنة بعد الغذاء', label: 'Injection after lunch' },
+    { value: 'حقنة بعد العشاء', label: 'Injection after dinner' },
+    { value: 'حقنة قبل النوم', label: 'Injection before sleep' },
+    { value: 'حقنة في الصباح', label: 'Injection in the morning' },
+    { value: 'حقنة في المساء', label: 'Injection in the evening' },
+    { value: 'حقنة كل يوم', label: 'Injection every day' },
+    { value: 'حقنة يوم بعد يوم', label: 'Injection every other day' },
+    { value: 'حقنة 3 مرات في الأسبوع', label: 'Injection 3 times a week' },
+    { value: 'حقنة كل أسبوع', label: 'Injection every week' },
+    { value: 'حقنة 3 مرات يومياً', label: 'Injection 3 times daily' },
+    { value: 'حقنة 4 مرات يومياً', label: 'Injection 4 times daily' },
+    { value: 'حقنة عند الحاجة', label: 'Injection when needed' },
+    { value: 'حقنة عند اللزوم', label: 'Injection as required' },
+    { value: 'حقنة في وقت الألم', label: 'Injection during pain' },
+    { value: 'حقنة في الليل حسب الحاجة', label: 'Injection at night if needed' },
+    { value: 'حقنة في الصباح والمساء', label: 'Injection morning and evening' },
+    { value: 'حقنة للأطفال يومياً', label: 'Injection daily for children' },
+    { value: 'حقنة للأطفال مرتين يومياً', label: 'Injection twice daily for children' },
+    { value: 'حقنة للكبار يومياً', label: 'Injection daily for adults' },
+    { value: 'حقنة كل شهر', label: 'Injection every month' },
+    { value: 'حقنة حسب الحاجة كل أسبوع', label: 'Injection as needed every week' },
+    { value: 'حقنة كل 3 أيام', label: 'Injection every 3 days' },
 
-    { value: 'أمبولة بعد الفطار', label: 'أمبولة بعد الفطار' },
-    { value: 'أمبولة بعد الغذاء', label: 'أمبولة بعد الغذاء' },
-    { value: 'أمبولة بعد العشاء', label: 'أمبولة بعد العشاء' },
-    { value: 'أمبولة قبل النوم', label: 'أمبولة قبل النوم' },
-    { value: 'أمبولة في الصباح', label: 'أمبولة في الصباح' },
-    { value: 'أمبولة في المساء', label: 'أمبولة في المساء' },
-    { value: 'أمبولة كل يوم', label: 'أمبولة كل يوم' },
-    { value: 'أمبولة يوم بعد يوم', label: 'أمبولة يوم بعد يوم' },
-    { value: 'أمبولة 3 مرات في الأسبوع', label: 'أمبولة 3 مرات في الأسبوع' },
-    { value: 'أمبولة كل أسبوع', label: 'أمبولة كل أسبوع' },
-    { value: 'أمبولة 3 مرات يومياً', label: 'أمبولة 3 مرات يومياً' },
-    { value: 'أمبولة 4 مرات يومياً', label: 'أمبولة 4 مرات يومياً' },
-    { value: 'أمبولة عند الحاجة', label: 'أمبولة عند الحاجة' },
-    { value: 'أمبولة عند اللزوم', label: 'أمبولة عند اللزوم' },
-    { value: 'أمبولة في وقت الألم', label: 'أمبولة في وقت الألم' },
-    { value: 'أمبولة في الليل حسب الحاجة', label: 'أمبولة في الليل حسب الحاجة' },
-    { value: 'أمبولة في الصباح والمساء', label: 'أمبولة في الصباح والمساء' },
-    { value: 'أمبولة للأطفال يومياً', label: 'أمبولة للأطفال يومياً' },
-    { value: 'أمبولة للأطفال مرتين يومياً', label: 'أمبولة للأطفال مرتين يومياً' },
-    { value: 'أمبولة للكبار يومياً', label: 'أمبولة للكبار يومياً' },
-    { value: 'أمبولة كل شهر', label: 'أمبولة كل شهر' },
-    { value: 'أمبولة حسب الحاجة كل أسبوع', label: 'أمبولة حسب الحاجة كل أسبوع' },
-    { value: 'أمبولة كل 3 أيام', label: 'أمبولة كل 3 أيام' },
+    { value: 'أمبولة بعد الفطار', label: 'Ampoule after breakfast' },
+    { value: 'أمبولة بعد الغذاء', label: 'Ampoule after lunch' },
+    { value: 'أمبولة بعد العشاء', label: 'Ampoule after dinner' },
+    { value: 'أمبولة قبل النوم', label: 'Ampoule before sleep' },
+    { value: 'أمبولة في الصباح', label: 'Ampoule in the morning' },
+    { value: 'أمبولة في المساء', label: 'Ampoule in the evening' },
+    { value: 'أمبولة كل يوم', label: 'Ampoule every day' },
+    { value: 'أمبولة يوم بعد يوم', label: 'Ampoule every other day' },
+    { value: 'أمبولة 3 مرات في الأسبوع', label: 'Ampoule 3 times a week' },
+    { value: 'أمبولة كل أسبوع', label: 'Ampoule every week' },
+    { value: 'أمبولة 3 مرات يومياً', label: 'Ampoule 3 times daily' },
+    { value: 'أمبولة 4 مرات يومياً', label: 'Ampoule 4 times daily' },
+    { value: 'أمبولة عند الحاجة', label: 'Ampoule when needed' },
+    { value: 'أمبولة عند اللزوم', label: 'Ampoule as required' },
+    { value: 'أمبولة في وقت الألم', label: 'Ampoule during pain' },
+    { value: 'أمبولة في الليل حسب الحاجة', label: 'Ampoule at night if needed' },
+    { value: 'أمبولة في الصباح والمساء', label: 'Ampoule morning and evening' },
+    { value: 'أمبولة للأطفال يومياً', label: 'Ampoule daily for children' },
+    { value: 'أمبولة للأطفال مرتين يومياً', label: 'Ampoule twice daily for children' },
+    { value: 'أمبولة للكبار يومياً', label: 'Ampoule daily for adults' },
+    { value: 'أمبولة كل شهر', label: 'Ampoule every month' },
+    { value: 'أمبولة حسب الحاجة كل أسبوع', label: 'Ampoule as needed every week' },
+    { value: 'أمبولة كل 3 أيام', label: 'Ampoule every 3 days' },
 
     // Drops (قطرات)
-    { value: 'قطرة بعد الفطار', label: 'قطرة بعد الفطار' },
-    { value: 'قطرة بعد الغذاء', label: 'قطرة بعد الغذاء' },
-    { value: 'قطرة بعد العشاء', label: 'قطرة بعد العشاء' },
-    { value: 'قطرة قبل النوم', label: 'قطرة قبل النوم' },
-    { value: 'قطرة في الصباح', label: 'قطرة في الصباح' },
-    { value: 'قطرة في المساء', label: 'قطرة في المساء' },
-    { value: 'قطرة كل يوم', label: 'قطرة كل يوم' },
-    { value: 'قطرة يوم بعد يوم', label: 'قطرة يوم بعد يوم' },
-    { value: 'قطرة 3 مرات في الأسبوع', label: 'قطرة 3 مرات في الأسبوع' },
-    { value: 'قطرة كل أسبوع', label: 'قطرة كل أسبوع' },
-    { value: 'قطرة 3 مرات يومياً', label: 'قطرة 3 مرات يومياً' },
-    { value: 'قطرة 4 مرات يومياً', label: 'قطرة 4 مرات يومياً' },
-    { value: 'قطرة عند الحاجة', label: 'قطرة عند الحاجة' },
-    { value: 'قطرة عند اللزوم', label: 'قطرة عند اللزوم' },
-    { value: 'قطرة في وقت الألم', label: 'قطرة في وقت الألم' },
-    { value: 'قطرة في الليل حسب الحاجة', label: 'قطرة في الليل حسب الحاجة' },
-    { value: 'قطرة في الصباح والمساء', label: 'قطرة في الصباح والمساء' },
-    { value: 'قطرة للأطفال يومياً', label: 'قطرة للأطفال يومياً' },
-    { value: 'قطرة للأطفال مرتين يومياً', label: 'قطرة للأطفال مرتين يومياً' },
-    { value: 'قطرة للكبار يومياً', label: 'قطرة للكبار يومياً' },
-    { value: 'قطرة كل شهر', label: 'قطرة كل شهر' },
-    { value: 'قطرة حسب الحاجة كل أسبوع', label: 'قطرة حسب الحاجة كل أسبوع' },
-    { value: 'قطرة كل 3 أيام', label: 'قطرة كل 3 أيام' },
-
+    { value: 'قطرة بعد الفطار', label: 'Drop after breakfast' },
+    { value: 'قطرة بعد الغذاء', label: 'Drop after lunch' },
+    { value: 'قطرة بعد العشاء', label: 'Drop after dinner' },
+    { value: 'قطرة قبل النوم', label: 'Drop before sleep' },
+    { value: 'قطرة في الصباح', label: 'Drop in the morning' },
+    { value: 'قطرة في المساء', label: 'Drop in the evening' },
+    { value: 'قطرة كل يوم', label: 'Drop every day' },
+    { value: 'قطرة يوم بعد يوم', label: 'Drop every other day' },
+    { value: 'قطرة 3 مرات في الأسبوع', label: 'Drop 3 times a week' },
+    { value: 'قطرة كل أسبوع', label:"Drop every week" },
+    { value: 'قطرة 3 مرات يومياً', label: 'Drop 3 times daily' },
+    { value: 'قطرة 4 مرات يومياً', label: 'Drop 4 times daily' },
+    { value: 'قطرة عند الحاجة', label: 'Drop when needed' },
+    { value: 'قطرة عند اللزوم', label: 'Drop as required' },
+    { value: 'قطرة في وقت الألم', label: 'Drop during pain' },
+    { value: 'قطرة في الليل حسب الحاجة', label: 'Drop at night if needed' },
+    { value: 'قطرة في الصباح والمساء', label: 'Drop morning and evening' },
+    { value: 'قطرة للأطفال يومياً', label: 'Drop daily for children' },
+    { value: 'قطرة للأطفال مرتين يومياً', label: 'Drop twice daily for children' },
+    { value: 'قطرة للكبار يومياً', label: 'Drop daily for adults' },
+    { value: 'قطرة كل شهر', label: 'Drop every month' },
+    { value: 'قطرة حسب الحاجة كل أسبوع', label: 'Drop as needed every week' },
+    { value: 'قطرة كل 3 أيام', label: 'Drop every 3 days' },
+  
     // Creams (كريمات)
-    { value: 'كريم صباحاً ومساءً', label: 'كريم صباحاً ومساءً' },
-    { value: 'كريم مرة يومياً', label: 'كريم مرة يومياً' },
-    { value: 'كريم مرتين يومياً', label: 'كريم مرتين يومياً' },
-
+    { value: 'كريم صباحاً ومساءً', label: 'Cream morning and evening' },
+    { value: 'كريم مرة يومياً', label: 'Cream once daily' },
+    { value: 'كريم مرتين يومياً', label: 'Cream twice daily' },
+  
     // Ointments (مرهم)
-    { value: 'مرهم صباحاً ومساءً', label: 'مرهم صباحاً ومساءً' },
-    { value: 'مرهم مرتين يومياً', label: 'مرهم مرتين يومياً' },
-    { value: 'مرهم مرة واحدة يومياً', label: 'مرهم مرة واحدة يومياً' },
-
+    { value: 'مرهم صباحاً ومساءً', label: 'Ointment morning and evening' },
+    { value: 'مرهم مرتين يومياً', label: 'Ointment twice daily' },
+    { value: 'مرهم مرة واحدة يومياً', label: 'Ointment once daily' },
+  
     // Suspensions (معلق)
-    { value: 'معلق 3 مرات يومياً', label: 'معلق 3 مرات يومياً' },
-    { value: 'معلق مرة واحدة يومياً', label: 'معلق مرة واحدة يومياً' },
+    { value: 'معلق 3 مرات يومياً', label: 'Suspension 3 times daily' },
+    { value: 'معلق مرة واحدة يومياً', label: 'Suspension once daily' },
 
-    // Suppositories (لبوس)
-    { value: 'لبوس قبل النوم', label: 'لبوس قبل النوم' },
-    { value: 'لبوس بعد الفطار', label: 'لبوس بعد الفطار' },
-    { value: 'لبوس بعد الغذاء', label: 'لبوس بعد الغذاء' },
-    { value: 'لبوس بعد العشاء', label: 'لبوس بعد العشاء' },
-    { value: 'لبوس كل 12 ساعة', label: 'لبوس كل 12 ساعة' },
-    { value: 'لبوس كل يوم', label: 'لبوس كل يوم' },
-    { value: 'لبوس 3 مرات يومياً', label: 'لبوس 3 مرات يومياً' },
-    { value: 'لبوس يوم بعد يوم', label: 'لبوس يوم بعد يوم' },
-    { value: 'لبوس عند اللزوم', label: 'لبوس عند اللزوم' },
-    { value: 'لبوس مرة واحدة يومياً', label: 'لبوس مرة واحدة يومياً' },
-    { value: 'لبوس مرة واحدة كل 3 أيام', label: 'لبوس مرة واحدة كل 3 أيام' },
-    { value: 'لبوس صباحاً ومساءً', label: 'لبوس صباحاً ومساءً' },
-    { value: 'لبوس كل 48 ساعة', label: 'لبوس كل 48 ساعة' },
-    { value: 'لبوس قبل النوم حسب الحاجة', label: 'لبوس قبل النوم حسب الحاجة' },
-    { value: 'لبوس قبل الفطار والعشاء', label: 'لبوس قبل الفطار والعشاء' },
-    { value: 'لبوس في وقت الألم', label: 'لبوس في وقت الألم' },
-    { value: 'لبوس عند الضرورة', label: 'لبوس عند الضرورة' },
-    { value: 'لبوس للأطفال مرة واحدة يومياً', label: 'لبوس للأطفال مرة واحدة يومياً' },
-    { value: 'لبوس للأطفال مرتين يومياً', label: 'لبوس للأطفال مرتين يومياً' },
-    { value: 'لبوس للكبار مرة واحدة يومياً', label: 'لبوس للكبار مرة واحدة يومياً' },
-    { value: 'لبوس للكبار مرتين يومياً', label: 'لبوس للكبار مرتين يومياً' },
-
+    { value: 'لبوس قبل النوم', label: 'Suppository Before Bed' },
+    { value: 'لبوس بعد الفطار', label: 'Suppository After Breakfast' },
+    { value: 'لبوس بعد الغذاء', label: 'Suppository After Lunch' },
+    { value: 'لبوس بعد العشاء', label: 'Suppository After Dinner' },
+    { value: 'لبوس كل 12 ساعة', label: 'Suppository Every 12 Hours' },
+    { value: 'لبوس كل يوم', label: 'Suppository Every Day' },
+    { value: 'لبوس 3 مرات يومياً', label: 'Suppository 3 Times Daily' },
+    { value: 'لبوس يوم بعد يوم', label: 'Suppository Every Other Day' },
+    { value: 'لبوس عند اللزوم', label: 'Suppository When Needed' },
+    { value: 'لبوس مرة واحدة يومياً', label: 'Suppository Once Daily' },
+    { value: 'لبوس مرة واحدة كل 3 أيام', label: 'Suppository Once Every 3 Days' },
+    { value: 'لبوس صباحاً ومساءً', label: 'Suppository Morning and Evening' },
+    { value: 'لبوس كل 48 ساعة', label: 'Suppository Every 48 Hours' },
+    { value: 'لبوس قبل النوم حسب الحاجة', label: 'Suppository Before Bed As Needed' },
+    { value: 'لبوس قبل الفطار والعشاء', label: 'Suppository Before Breakfast and Dinner' },
+    { value: 'لبوس في وقت الألم', label: 'Suppository At Time of Pain' },
+    { value: 'لبوس عند الضرورة', label: 'Suppository As Necessary' },
+    { value: 'لبوس للأطفال مرة واحدة يومياً', label: 'Suppository for Children Once Daily' },
+    { value: 'لبوس للأطفال مرتين يومياً', label: 'Suppository for Children Twice Daily' },
+    { value: 'لبوس للكبار مرة واحدة يومياً', label: 'Suppository for Adults Once Daily' },
+    { value: 'لبوس للكبار مرتين يومياً', label: 'Suppository for Adults Twice Daily' },
     // Miscellaneous
-    { value: 'محلول للغرغرة 3 مرات يومياً', label: 'محلول للغرغرة 3 مرات يومياً' },
-    { value: 'شامبو مرة كل يومين', label: 'شامبو مرة كل يومين' },
-    { value: 'بخاخ مرتين يومياً', label: 'بخاخ مرتين يومياً' },
-    { value: 'مسحوق يخلط حسب التوجيه', label: 'مسحوق يخلط حسب التوجيه' },
-    { value: 'محلول يستخدم حسب التوجيه', label: 'محلول يستخدم حسب التوجيه' },
-
+    { value: 'محلول للغرغرة 3 مرات يومياً', label: 'Gargle solution 3 times daily' },
+    { value: 'شامبو مرة كل يومين', label: 'Shampoo once every two days' },
+    { value: 'بخاخ مرتين يومياً', label: 'Spray twice daily' },
+    { value: 'مسحوق يخلط حسب التوجيه', label: 'Powder to mix as directed' },
+    { value: 'محلول يستخدم حسب التوجيه', label: 'Solution to use as directed' },
+  
     // Combination (تركيبة)
-    { value: 'تركيبة ثلاثية: قرص صباحاً ومساءً', label: 'تركيبة ثلاثية: قرص صباحاً ومساءً' },
-    { value: 'تركيبة صباحاً ومساءً حسب التوجيه', label: 'تركيبة صباحاً ومساءً حسب التوجيه' }
+    { value: 'تركيبة ثلاثية: قرص صباحاً ومساءً', label: 'Triple combination: Tablet morning and evening' },
+    { value: 'تركيبة صباحاً ومساءً حسب التوجيه', label: 'Combination morning and evening as directed' }
+  
 ];
-
 
 
   const customSelectStyles = {
@@ -343,7 +341,7 @@ useEffect(() => {
     }
   };
 
- const handlePrint = async () => {
+  const handlePrint = async () => {
     try {
       // Track medicine usage data when printing
       const medicineUsageData = {
@@ -351,43 +349,41 @@ useEffect(() => {
         medicine2: treatment.medicine2,
         medicine3: treatment.medicine3,
         medicine4: treatment.medicine4,
-        medicine5: treatment.medicine5
+        medicine5: treatment.medicine5,
       };
   
       // Post the medicine usage data only when printing
-      const response = await axios.post('https://patient-managment-backend.vercel.app/api/medicine-usage/track', medicineUsageData);
-      console.log('Medicine usage tracking response for print:', response.data);
-  
+      const response = await axios.post(
+        "https://patient-managment-backend.vercel.app/api/medicine-usage/track",
+        medicineUsageData
+      );
+      console.log("Medicine usage tracking response for print:", response.data);
     } catch (error) {
-      console.error('Error tracking medicine usage:', error);
+      console.error("Error tracking medicine usage:", error);
     }
   
     // Trigger print dialog
     window.print();
   
     // Set up the event listener for after printing
-    window.onafterprint = async () => {
-      console.log('Patient ID to delete:', patient._id);
-  
-      try {
-        const response = await axios.delete(
-          `https://patient-managment-backend.vercel.app/api/patients/${encodeURIComponent(patient._id)}`
-        );
-  
-        // Redirect to the doctor page after successful deletion
-        window.location.href = '/doctor';
-      } catch (error) {
-        console.error('Error deleting patient data:', error);
-        alert(
-          error.response?.data?.message ||
-          'Failed to delete patient data. Please check the logs.'
-        );
+    window.onafterprint = () => {
+      console.log("Patient ID to remove from display:", patient._id);
+    
+      if (typeof setPatients === "function") {
+        setPatients((prevPatients) => {
+          const updatedPatients = prevPatients.filter((p) => p._id !== patient._id);
+          console.log("Updated patients list:", updatedPatients);
+          return updatedPatients;
+        });
+      } else {
+        console.error("setPatients is not defined or not a function.");
       }
+    
+      // Redirect to the doctor page
+      window.location.href = "/doctor";    
     };
   };
   
-  
-
   const handleNewPrescription = () => {
     setShowPrescription(false);
     setTreatment({
@@ -480,26 +476,25 @@ useEffect(() => {
               <div className="flex-grow mt-32 ml-6 space-y-3">
   {[1, 2, 3, 4, 5].map((num) => {
     if (treatment[`medicine${num}`] && treatment[`dosage${num}`]) {
-      // Determine the color based on the index
       let medicineColor;
       switch (num) {
         case 1:
-          medicineColor = 'text-red-500'; // Red for first medicine
+          medicineColor = 'text-red-500';
           break;
         case 2:
-          medicineColor = 'text-green-500'; // Green for second medicine
+          medicineColor = 'text-green-500';
           break;
         case 3:
-          medicineColor = 'text-blue-500'; // Blue for third medicine
+          medicineColor = 'text-blue-500';
           break;
         case 4:
-          medicineColor = 'text-black'; // Black for fourth medicine
+          medicineColor = 'text-black';
           break;
         case 5:
-          medicineColor = 'text-red-500'; // Red for fifth medicine
+          medicineColor = 'text-red-500';
           break;
         default:
-          medicineColor = 'text-gray-800'; // Default color
+          medicineColor = 'text-gray-800';
           break;
       }
 
@@ -511,7 +506,7 @@ useEffect(() => {
             )?.label}
           </span>
           <span className="block text-sm text-black ml-20 font-tajawal">
-            {treatment[`dosage${num}`]}
+            {dosageList.find((d) => d.value === treatment[`dosage${num}`])?.value}
           </span>
         </div>
       );
