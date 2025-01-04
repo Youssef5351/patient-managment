@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
-import elkoumi from "../assets/Elkoumi2.jpg";
+import elkoumi from "../assets/Elkoumi3.jpg";
 
 const TreatmentForm = () => {
   const location = useLocation();
