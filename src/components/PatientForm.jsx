@@ -1,9 +1,12 @@
 import React, { useState,useEffect } from "react";
 import api from "../api/axios";
 import axios from "axios";
-
+import ShiftStatistics from "./ShiftStatistics";
 function PatientForm() {
   const [shift, setShift] = useState(null); // Track selected shift
+  const [patients, setPatients] = useState([]); // Patients in the current shift
+  const [revenue, setRevenue] = useState(0); // Revenue for the current shift
+  const [activeTab, setActiveTab] = useState("addPatient"); // Manage active tab
   const [patient, setPatient] = useState({
     name: "",
     age: "",
@@ -23,7 +26,7 @@ function PatientForm() {
     if (successMessage) {
       timeoutId = setTimeout(() => {
         setSuccessMessage("");
-      }, 2000);
+      }, 1000);
     }
     
     // Cleanup function to clear timeout if component unmounts or message changes
@@ -34,8 +37,11 @@ function PatientForm() {
     };
   }, [successMessage]);
 
+
+
   const handleShiftSelection = (selectedShift) => {
     setShift(selectedShift);
+    setActiveTab("addPatient");
     setShiftCompleted(false);
   };
   const handleSubmit = async (e) => {
@@ -61,7 +67,7 @@ function PatientForm() {
       setSubmitting(false);
     }
   };
-
+  
   const handleCompleteShift = async () => {
     try {
       const payload = {
@@ -128,6 +134,7 @@ function PatientForm() {
 
   return (
     <div className="min-h-screen p-6 bg-gray-900 font-cairo">
+      <ShiftStatistics shift={shift} />
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-100 text-center">
           إضافة مريض جديد - {shift === "morning" ? "الفترة الصباحية" : "الفترة المسائية"}
@@ -157,7 +164,7 @@ function PatientForm() {
               value={patient.name}
               onChange={handleChange}
               className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-              placeholder="أدخل اسم المريض..."
+              placeholder="أدخل اسم المريض الثلاثي ..."
               required
             />
           </div>
