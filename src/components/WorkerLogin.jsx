@@ -10,7 +10,7 @@ const Login = ({ setAuth }) => {
     if (username === "Doctor" && password === "Doctor402") {
       setAuth({ token: "doctor-token", role: "doctor" });
       navigate("/doctor");
-    } else if (username === "Worker" && password === "Worker123") {
+    } else if (username === "Member" && password === "Member123") {
       setAuth({ token: "worker-token", role: "worker" });
       navigate("/");
     } else {
